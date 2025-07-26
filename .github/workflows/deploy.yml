@@ -61,11 +61,8 @@ jobs:
             sudo touch .env
             echo "${{ secrets.ENV }}" | sudo tee .env > /dev/null
             
-            sudo curl -o docker-compose.yml https://raw.githubusercontent.com/2025-hajithon/[레포지토리 이름]/main/docker-compose.yml
-            
             sudo chmod 666 /var/run/docker.sock
             sudo docker rm -f $(docker ps -qa)
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/hajithon
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/hajithon
             docker compose -f docker-compose.yml --env-file .env up -d
             docker image prune -f
