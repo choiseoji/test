@@ -1,0 +1,11 @@
+spring:
+  config:
+    activate:
+      on-profile: common
+    import: optional:file:.env[.properties]
+logging:
+  level:
+    org.hibernate.SQL: debug
+#springdoc:
+#  swagger-ui:
+#    path: /swagger
