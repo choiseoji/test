@@ -42,7 +42,7 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/hajithon
+          tags: ${{ secrets.DOCKER_USERNAME }}/hajithon:prod
 
       # ssh EC2
       - name: executing remote ssh commands using password
@@ -55,10 +55,10 @@ jobs:
             cd /home/ubuntu/hajithon
             
             sudo touch .env
-            echo "${{ secrets.ENV }}" | sudo tee .env > /dev/null
+            echo "${{ secrets.ENV_PROD }}" | sudo tee .env > /dev/null
             
             sudo chmod 666 /var/run/docker.sock
             sudo docker rm -f $(docker ps -qa)
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/hajithon
-            docker compose -f docker-compose.yml --env-file .env up -d
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/hajithon:prod
+            docker compose -f docker-compose-prod.yml --env-file .env up -d
             docker image prune -f
